@@ -185,22 +185,28 @@ int main(void) {
     pd_ui_draw(&ui,&c,&game,&snap,NULL);assert(!has(&ui,HIT_SETTING+SETTING_ASPECT));
     pd_ui_draw(&ui,&c,&game,&snap,&wide);
     assert(has(&ui,HIT_SETTING+SETTING_ASPECT) && !has(&ui,HIT_SETTING+SETTING_AUTO_ZOOM));
+    assert(!has(&ui,HIT_SETTING+SETTING_EXPAND_BATTLES));
     tap(&ui,HIT_SETTING+SETTING_ASPECT);assert(ui.overlay==PD_OVERLAY_PICK_ASPECT);
     pd_ui_draw(&ui,&c,&game,&snap,&wide);tap(&ui,HIT_OPTION+PD_ASPECT_ZOOM_OUT);
     assert(ui.overlay==PD_OVERLAY_NONE && settings.aspect==PD_ASPECT_ZOOM_OUT);
     assert(pd_ui_take_action(&ui)==PD_ACTION_SETTINGS_CHANGED);
-    pd_ui_draw(&ui,&c,&game,&snap,&wide);assert(has(&ui,HIT_SETTING+SETTING_AUTO_ZOOM) && settings.autoZoom);
+    pd_ui_draw(&ui,&c,&game,&snap,&wide);
+    assert(has(&ui,HIT_SETTING+SETTING_AUTO_ZOOM) && settings.autoZoom);
+    assert(has(&ui,HIT_SETTING+SETTING_EXPAND_BATTLES) && settings.expandBattles);
+    tap(&ui,HIT_SETTING+SETTING_EXPAND_BATTLES);assert(!settings.expandBattles);
+    assert(pd_ui_take_action(&ui)==PD_ACTION_SETTINGS_CHANGED);
     tap(&ui,HIT_SETTING+SETTING_AUTO_ZOOM);assert(!settings.autoZoom);
     assert(pd_ui_take_action(&ui)==PD_ACTION_SETTINGS_CHANGED);
     wide.expandGame=false;pd_ui_draw(&ui,&c,&game,&snap,&wide);
     assert(!has(&ui,HIT_SETTING+SETTING_ASPECT) && !has(&ui,HIT_SETTING+SETTING_AUTO_ZOOM));
-    // Saved and read back; a file from before (no aspect / autozoom keys) keeps the defaults.
+    assert(!has(&ui,HIT_SETTING+SETTING_EXPAND_BATTLES));
+    // Saved and read back; a file from before (no aspect / autozoom / expandbattles keys) keeps the defaults.
     const char* path="/tmp/pd-host-display-settings.ini";
     assert(pd_settings_save(&settings,path));
     struct pd_settings back;assert(pd_settings_load(&back,path));
-    assert(back.aspect==PD_ASPECT_ZOOM_OUT && !back.autoZoom && back.ffSpeed==settings.ffSpeed);
+    assert(back.aspect==PD_ASPECT_ZOOM_OUT && !back.autoZoom && !back.expandBattles && back.ffSpeed==settings.ffSpeed);
     FILE* old=fopen(path,"w");fputs("screen=1\nff=3\nguide=0\n",old);fclose(old);
-    assert(pd_settings_load(&back,path) && back.aspect==PD_ASPECT_ORIGINAL && back.autoZoom && back.ffSpeed==3);
+    assert(pd_settings_load(&back,path) && back.aspect==PD_ASPECT_ORIGINAL && back.autoZoom && back.expandBattles && back.ffSpeed==3);
     // A second save over the first is read back (1.6.0's 3DS kept the first file forever), and the Old 3DS's switch too.
     settings.darkMode=true;settings.theme=3;settings.expandOff=true;assert(pd_settings_save(&settings,path));
     settings.theme=5;assert(pd_settings_save(&settings,path));

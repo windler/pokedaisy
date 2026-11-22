@@ -836,12 +836,21 @@ static void wide_window(int aspect, unsigned fw, unsigned fh, unsigned *w, unsig
 }
 
 static bool rewinding;   // the frontend is rewinding: the camera stays where the aspect put it (no AUTO ZOOM IN on the odd frames)
+/* A battle is on screen (its transition, the battle itself, or a battle's party / bag screen). */
+static bool battle_scene(void) {
+  int scene = pk_wide_scene(), mode = pk_wide_last_mode();
+  return scene == PK_WIDE_SCENE_BATTLE_START || mode == PK_WIDE_MODE_BATTLE ||
+         (mode == PK_WIDE_MODE_MENU && scene == PK_WIDE_SCENE_OFF);
+}
+/* The aspect for what is on screen now: EXPAND IN BATTLES off shows a battle in the game's own picture. */
+static int effective_aspect(void) {
+  if (!settings.expandBattles && battle_scene()) return PD_ASPECT_ORIGINAL;
+  return settings.aspect == PD_ASPECT_ZOOM_OUT && settings.autoZoom && pk_wide_scene() != PK_WIDE_SCENE_FIELD && !rewinding
+             ? PD_ASPECT_EXPAND : settings.aspect;
+}
 /* The window for this frame, in the game frame's pixels (and wideW x wideH set). */
 static struct PkWideView wide_rect(unsigned fw, unsigned fh) {
-  int last = pk_wide_scene();
-  int aspect = settings.aspect == PD_ASPECT_ZOOM_OUT && settings.autoZoom && last != PK_WIDE_SCENE_FIELD && !rewinding
-                   ? PD_ASPECT_EXPAND : settings.aspect;
-  wide_window(aspect, fw, fh, &wideW, &wideH);
+  wide_window(effective_aspect(), fw, fh, &wideW, &wideH);
   return (struct PkWideView){((int)fw - (int)wideW) / 2, ((int)fh - (int)wideH) / 2, (int)wideW, (int)wideH};
 }
 
@@ -967,7 +976,7 @@ static void wide_tick(void) {
     return;
   PF_T(cv1);
   pf_add(PF_CONV, cv1 - cv0);
-  if (settings.aspect == PD_ASPECT_ORIGINAL) {
+  if (effective_aspect() == PD_ASPECT_ORIGINAL) {
     // Nothing past the picture, but the scene still read (FLY's "on the field"): a one-pixel window.
     static uint32_t px;
     pk_wide_view(core, wideSource, &px, (struct PkWideView){0, 0, 1, 1}, NULL);
@@ -1035,18 +1044,19 @@ static void choose_canvas(void) {
 static int want_canvas(void) {
   if (companion || (quickOpen && !PD_BE_IS_GBA()))
     return CANVAS_MENU;
-  if (settings.aspect == PD_ASPECT_ORIGINAL)
+  int aspect = effective_aspect();
+  if (aspect == PD_ASPECT_ORIGINAL)
     return PD_BE_IS_GBA() ? CANVAS_EXPAND : CANVAS_ZOOM;
-  if (!wideSupported || settings.aspect != PD_ASPECT_ZOOM_OUT)
+  if (!wideSupported || aspect != PD_ASPECT_ZOOM_OUT)
     return CANVAS_EXPAND;
-  return settings.autoZoom && !rewinding && pk_wide_scene() != PK_WIDE_SCENE_FIELD ? CANVAS_EXPAND : CANVAS_ZOOM;
+  return CANVAS_ZOOM;
 }
 
 /* Follow the aspect: when the wanted canvas differs, resize it and tell the frontend (it rescales to the new whole factor). */
 static void canvas_update(bool notify) {
   int w = menuW, h = menuH, scale = 1;
   unsigned fw = gameW ? gameW : (unsigned)baseGW, fh = gameH ? gameH : (unsigned)baseGH;
-  if (PD_BE_IS_GBA() && !companion && settings.aspect == PD_ASPECT_ORIGINAL && fw && fh) {
+  if (PD_BE_IS_GBA() && !companion && effective_aspect() == PD_ASPECT_ORIGINAL && fw && fh) {
     w = (int)fw;
     h = (int)fh;
   } else if (panelW)

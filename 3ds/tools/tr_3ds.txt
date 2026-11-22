@@ -23,6 +23,7 @@
 "GBA CORE" to Tr(fr = "CŒUR GBA", de = "GBA-KERN", it = "CORE GBA", es = "NÚCLEO GBA", br = "NÚCLEO GBA", pt = "NÚCLEO GBA"),
 " (its GBA CORE)" to Tr(fr = " (son CŒUR GBA)", de = " (sein GBA-KERN)", it = " (il suo CORE GBA)", es = " (su NÚCLEO GBA)", br = " (seu NÚCLEO GBA)", pt = " (o seu NÚCLEO GBA)"),
 "VIEW" to Tr(fr = "VUE", de = "ANSICHT", it = "VISTA", es = "VISTA", br = "VISÃO", pt = "VISTA"),
+"EXPAND IN BATTLES" to Tr(fr = "ÉTENDRE EN COMBAT", de = "ERWEITERN IM KAMPF", it = "ESPANDI IN LOTTA", es = "AMPLIAR EN COMBATE", br = "EXPANDIR EM BATALHA", pt = "EXPANDIR EM BATALHA"),
 "LIST" to Tr(fr = "LISTE", de = "LISTE", it = "LISTA", es = "LISTA", br = "LISTA", pt = "LISTA"),
 "FIELD" to Tr(fr = "TERRAIN", de = "FELD", it = "CAMPO", es = "CAMPO", br = "CAMPO", pt = "CAMPO"),
 "HACK" to Tr(fr = "HACK", de = "HACK", it = "HACK", es = "HACK", br = "HACK", pt = "HACK"),

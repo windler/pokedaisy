@@ -701,8 +701,9 @@ static void act(struct pd_ui* ui, int id) {
         ui->action = PD_ACTION_SETTINGS_CHANGED;
     } else if (id == HIT_SETTING + SETTING_VIEW) {
         ui->overlay = PD_OVERLAY_PICK_VIEW;
-    } else if (id == HIT_SETTING + SETTING_AUTO_ZOOM) {
-        ui->settings->autoZoom = !ui->settings->autoZoom;
+    } else if (id == HIT_SETTING + SETTING_AUTO_ZOOM || id == HIT_SETTING + SETTING_EXPAND_BATTLES) {
+        if (id == HIT_SETTING + SETTING_AUTO_ZOOM) ui->settings->autoZoom = !ui->settings->autoZoom;
+        else ui->settings->expandBattles = !ui->settings->expandBattles;
         ui->action = PD_ACTION_SETTINGS_CHANGED;
     } else if (id >= HIT_SETTING && id <= HIT_SETTING + SETTING_ASPECT) {
         static const enum pd_overlay OPENS[] = {

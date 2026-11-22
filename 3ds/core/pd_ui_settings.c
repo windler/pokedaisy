@@ -339,6 +339,8 @@ void ui_settings_tab(struct pd_ui* ui, struct pd_canvas* c, const struct pd_game
         // One VIEW row for SCREEN and ASPECT (the user's call): how big the picture is and whether EXPAND fills past it.
         const bool expand = host->hasExpand && host->expandGame;
         setting(ui, c, ix, &y, iw, SETTING_VIEW, "VIEW", pd_view_name(pd_view_of(st, expand)));
+        if (expand && st->aspect != PD_ASPECT_ORIGINAL)
+            setting(ui, c, ix, &y, iw, SETTING_EXPAND_BATTLES, "EXPAND IN BATTLES", st->expandBattles ? "ON" : "OFF");
         if (expand && st->aspect == PD_ASPECT_ZOOM_OUT)
             setting(ui, c, ix, &y, iw, SETTING_AUTO_ZOOM, "AUTO ZOOM IN", st->autoZoom ? "ON" : "OFF");
     } else {
@@ -350,6 +352,8 @@ void ui_settings_tab(struct pd_ui* ui, struct pd_canvas* c, const struct pd_game
             setting(ui, c, ix, &y, iw, SETTING_ASPECT, "ASPECT", pd_aspect_name(st->aspect));
             // Two values: flips in place (the app's rule for pick-lists is more than two). Only
             // ZOOM OUT has anything to step back from.
+            if (st->aspect != PD_ASPECT_ORIGINAL)
+                setting(ui, c, ix, &y, iw, SETTING_EXPAND_BATTLES, "EXPAND IN BATTLES", st->expandBattles ? "ON" : "OFF");
             if (st->aspect == PD_ASPECT_ZOOM_OUT)
                 setting(ui, c, ix, &y, iw, SETTING_AUTO_ZOOM, "AUTO ZOOM IN", st->autoZoom ? "ON" : "OFF");
         } else {

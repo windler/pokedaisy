@@ -833,10 +833,11 @@ void pd_session_wide_finish(void) {
 static void wide_tick(struct pd_session* s, bool skip) {
     s->wideReady = false;
     if (!s->wideKnown) return;
-    pk_wide_lines(s->settings->aspect != PD_ASPECT_ORIGINAL);
+    bool battle = in_battle(s);
+    bool original = s->settings->aspect == PD_ASPECT_ORIGINAL || (battle && !s->settings->expandBattles);
+    pk_wide_lines(!original);
     // Nothing past the picture, so only the scene is wanted (FLY's "on the field"): a look every few frames. Every frame
     // took 7 ms of a New 3DS's 16.7, and with the game's own 9 that's one refresh too many.
-    bool original = s->settings->aspect == PD_ASPECT_ORIGINAL;
     if (original && s->frame % ORIGINAL_SCENE_EVERY) return;
     bool menu = !original && menu_screen(s);
     s->menuLatched = menu;

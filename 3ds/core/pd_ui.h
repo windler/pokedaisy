@@ -73,6 +73,7 @@ struct pd_settings {
     int guideNotice; // a bit per game kind whose GUIDE notice was accepted
     int aspect;      // enum pd_aspect (hosts with hasExpand only)
     bool autoZoom;   // AUTO ZOOM IN: ZOOM OUT steps back in off the plain overworld
+    bool expandBattles; // EXPAND IN BATTLES: keep EXPAND / ZOOM OUT in battles; off = the game's own picture
     bool wildOff;    // WILD ENCOUNTERS off (hosts that can: the Linux host's quick menu)
     int tabBar;      // TAB BAR: a bit per enum pd_tab on the bar (PARTY .. DEX, CARD); the rest open from MORE
     bool showPerf;   // FPS / CPU in the corner of the game (hosts with hasPerf)

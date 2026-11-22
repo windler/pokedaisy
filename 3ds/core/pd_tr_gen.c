@@ -2,7 +2,7 @@
 // hand: change those and run `make -C 3ds tables`. The keys the 3DS / Linux code uses, in strcmp order (pd_tr.h).
 #include "pd_tr.h"
 
-const struct pd_tr_entry pd_tr_table[736] = {
+const struct pd_tr_entry pd_tr_table[737] = {
     { "  HACK", { "  HACK", NULL, NULL, NULL, NULL, NULL, NULL } },
     { "  NONE", { "  NONE", "  AUCUN", "  KEINS", "  NESSUNO", "  NINGUNO", "  NENHUM", "  NENHUM" } },
     { "  SHINY", { "  SHINY", "  CHROMATIQUE", "  SCHILLERND", "  CROMATICO", "  VARIOCOLOR", "  BRILHANTE", "  BRILHANTE" } },
@@ -172,6 +172,7 @@ const struct pd_tr_entry pd_tr_table[736] = {
     { "EXP", { "EXP", NULL, "EP", "ESP", NULL, "EXP.", "EXP." } },
     { "EXPAND", { "EXPAND", "ÉTENDRE", "ERWEITERN", "ESPANDI", "AMPLIAR", "EXPANDIR", "EXPANDIR" } },
     { "EXPAND 1x (EXPERIMENTAL)", { "EXPAND 1x (EXPERIMENTAL)", "EXPAND 1x (EXPÉRIMENTAL)", "EXPAND 1x (EXPERIMENTELL)", "EXPAND 1x (SPERIMENTALE)", NULL, NULL, NULL } },
+    { "EXPAND IN BATTLES", { "EXPAND IN BATTLES", "ÉTENDRE EN COMBAT", "ERWEITERN IM KAMPF", "ESPANDI IN LOTTA", "AMPLIAR EN COMBATE", "EXPANDIR EM BATALHA", "EXPANDIR EM BATALHA" } },
     { "Every Pokémon this Pokédex lists is caught.", { "Every Pokémon this Pokédex lists is caught.", "Tous les Pokémon de ce Pokédex sont attrapés.", "Alle Pokémon dieses Pokédex sind gefangen.", "Tutti i Pokémon di questo Pokédex sono catturati.", "Todos los Pokémon de esta Pokédex están atrapados.", "Todos os Pokémon desta Pokédex foram capturados.", "Todos os Pokémon desta Pokédex foram capturados." } },
     { "Every boss is beaten.", { "Every boss is beaten.", "Tous les boss sont battus.", "Alle Bosse besiegt.", "Tutti i boss sconfitti.", "Todos los jefes derrotados.", "Todos os chefes foram derrotados.", "Todos os chefes foram derrotados." } },
     { "Every gym leader and the League are beaten.", { "Every gym leader and the League are beaten.", "Tous les champions d'arène et la Ligue sont battus.", "Alle Arenaleiter und die Liga sind besiegt.", "Tutti i capopalestra e la Lega sono battuti.", "Todos los líderes de gimnasio y la Liga están vencidos.", "Todos os líderes de ginásio e a Liga foram vencidos.", "Todos os líderes de ginásio e a Liga foram vencidos." } },
@@ -740,4 +741,4 @@ const struct pd_tr_entry pd_tr_table[736] = {
     { "the game.", { "the game.", "dans le jeu.", "im Spiel ab.", "nel gioco.", "en el juego.", "no jogo.", "no jogo." } },
     { "x%d  (a stack holds %d)", { "x%d  (a stack holds %d)", "x%d  (une pile en contient %d)", "x%d  (ein Stapel fasst %d)", "x%d  (una pila ne tiene %d)", "x%d  (un montón lleva %d)", "x%d  (uma pilha tem %d)", "x%d  (uma pilha tem %d)" } },
 };
-const int pd_tr_table_count = 736;
+const int pd_tr_table_count = 737;

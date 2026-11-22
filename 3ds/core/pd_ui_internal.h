@@ -124,6 +124,7 @@ enum setting_row {
     SETTING_LOAD_STATE,
     SETTING_LEAVE,
     SETTING_ASPECT,    // hosts with hasExpand
+    SETTING_EXPAND_BATTLES,
     SETTING_AUTO_ZOOM,
     SETTING_TAB_BAR,   // opens its page
     SETTING_HUD,       // hosts with hasHud: opens its page
